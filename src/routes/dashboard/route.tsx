@@ -8,9 +8,8 @@ export const Route = createFileRoute("/dashboard")({
       throw redirect({ to: "/login" });
     }
 
-    // `context.queryClient` is also available in our loaders
-    // https://tanstack.com/start/latest/docs/framework/react/examples/start-basic-react-query
-    // https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading
+    // re-return to update type as non-null for child routes
+    return { user: context.user };
   },
 });
 
