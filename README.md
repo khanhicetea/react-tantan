@@ -10,8 +10,6 @@ A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https:
 
 ## Getting Started
 
-We use **pnpm** by default, but you can modify the scripts in [package.json](./package.json) to use your preferred package manager.
-
 1. [Use this template](https://github.com/new?template_name=react-tanstarter&template_owner=dotnize) or clone this repository with gitpick:
 
    ```bash
@@ -53,11 +51,11 @@ We use **pnpm** by default, but you can modify the scripts in [package.json](./p
 
 #### Scripts
 
-These scripts in [package.json](./package.json#L5) use **pnpm** by default, but you can modify them to use your preferred package manager.
+We use **pnpm** by default, but you can modify these scripts in [package.json](./package.json) to use your preferred package manager.
 
 - **`auth:generate`** - Regenerate the [auth db schema](./src/lib/db/schema/auth.schema.ts) if you've made changes to your Better Auth [config](./src/lib/auth/auth.ts).
-- **`db`** - Run drizzle-kit commands. (e.g. `pnpm db generate` to generate a migration)
-- **`ui`** - The shadcn/ui CLI. (e.g. `pnpm ui add button` to add the button component)
+- **`db`** - Run [drizzle-kit](https://orm.drizzle.team/docs/kit-overview) commands. (e.g. `pnpm db generate`, `pnpm db studio`)
+- **`ui`** - The shadcn/ui CLI. (e.g. `pnpm ui add button`)
 - **`format`**, **`lint`**, **`check-types`** - Run Prettier, ESLint, and check TypeScript types respectively.
   - **`check`** - Run all three above. (e.g. `pnpm check`)
 - **`deps`** - Selectively upgrade dependencies via taze.
