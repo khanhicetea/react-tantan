@@ -9,6 +9,9 @@ import { db } from "~/lib/db";
 const getAuthConfig = serverOnly(() =>
   betterAuth({
     baseURL: env.VITE_BASE_URL,
+    telemetry: {
+      enabled: false,
+    },
     database: drizzleAdapter(db, {
       provider: "pg",
     }),
