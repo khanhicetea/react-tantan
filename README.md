@@ -4,7 +4,7 @@ A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https:
 
 - [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)
 - TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest)
-- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL
 - [Better Auth](https://www.better-auth.com/)
 
@@ -43,7 +43,7 @@ A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https:
 
 ## Deploying to production
 
-The [vite config](./vite.config.ts#L21-L22) is currently configured to use [Nitro v3](https://v3.nitro.build/docs/migration) (nightly) for deploying to Vercel.
+The [vite config](./vite.config.ts#L21-L22) is currently configured to use [Nitro v3](https://v3.nitro.build) (nightly) for deploying to Vercel.
 
 Please refer to the [TanStack Start hosting docs](https://tanstack.com/start/latest/docs/framework/react/hosting) for deploying to other platforms.
 
