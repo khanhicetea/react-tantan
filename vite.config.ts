@@ -12,12 +12,7 @@ export default defineConfig({
     tsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    tanstackStart({
-      router: {
-        quoteStyle: "double",
-        semicolons: true,
-      },
-    }),
+    tanstackStart(),
     // https://tanstack.com/start/latest/docs/framework/react/hosting#using-nitro-v3-beta
     nitro(),
     viteReact({
