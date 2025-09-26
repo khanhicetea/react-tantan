@@ -43,7 +43,7 @@ A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https:
 
 ## Deploying to production
 
-The [vite config](./vite.config.ts#L21-L22) is currently configured to use [Nitro v3](https://v3.nitro.build) (nightly) for deploying to Vercel.
+The [vite config](./vite.config.ts#L21-L22) is currently configured to use [Nitro v3](https://github.com/nitrojs/nitro/blob/v3/docs/1.guide/00.migration.md) (nightly) for deploying to Vercel.
 
 Please refer to the [TanStack Start hosting docs](https://tanstack.com/start/latest/docs/framework/react/hosting) for deploying to other platforms.
 
@@ -52,7 +52,7 @@ Please refer to the [TanStack Start hosting docs](https://tanstack.com/start/lat
 - [React Compiler docs](https://react.dev/learn/react-compiler), [Working Group](https://github.com/reactwg/react-compiler/discussions) - React Compiler is in RC.
 - [Start BETA Tracking](https://github.com/TanStack/router/discussions/2863) - TanStack Start is in RC.
 - [Devtools Releases](https://github.com/TanStack/devtools/releases) - TanStack Devtools is in alpha and may still have breaking changes.
-- [Nitro v3 Beta](https://v3.nitro.build/docs/migration) - We're currently using Nitro v3 Nightly for Vercel deployment by default.
+- [Nitro v3 Beta](https://github.com/nitrojs/nitro/blob/v3/docs/1.guide/00.migration.md) - We're currently using Nitro v3 Nightly for Vercel deployment by default.
 
 ## Goodies
 
