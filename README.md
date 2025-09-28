@@ -1,5 +1,10 @@
 # [React TanStarter](https://github.com/dotnize/react-tanstarter)
 
+> [!WARNING]
+> OAuth providers are currently broken in development with the Nitro v3 plugin. (https://github.com/TanStack/router/issues/5220)
+>
+> A temporary workaround is available at https://github.com/dotnize/react-tanstarter/issues/30#issuecomment-3342764234.
+
 A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https://tanstarter.nize.ph/)
 
 - [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)
