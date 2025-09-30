@@ -43,7 +43,7 @@ A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https:
 
 ## Deploying to production
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/543674a1-e85c-4f61-b9fc-ad4701aa1f84/deploy-status)](https://app.netlify.com/projects/react-tanstarter/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/543674a1-e85c-4f61-b9fc-ad4701aa1f84/deploy-status)](https://tanstarter.nize.ph/)
 
 The [vite config](./vite.config.ts#L16-L17) is currently configured to deploy on Netlify.
 
