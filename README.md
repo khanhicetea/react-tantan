@@ -1,10 +1,5 @@
 # [React TanStarter](https://github.com/dotnize/react-tanstarter)
 
-> [!WARNING]
-> OAuth providers are currently broken in development with the Nitro v3 plugin. (https://github.com/TanStack/router/issues/5220)
->
-> A temporary workaround is available at https://github.com/dotnize/react-tanstarter/issues/30#issuecomment-3342764234.
-
 A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https://tanstarter.nize.ph/)
 
 - [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)
@@ -48,7 +43,9 @@ A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https:
 
 ## Deploying to production
 
-The [vite config](./vite.config.ts#L21-L22) is currently configured to use [Nitro v3](https://github.com/nitrojs/nitro/blob/v3/docs/1.guide/00.migration.md) (nightly) for deploying to Vercel.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/543674a1-e85c-4f61-b9fc-ad4701aa1f84/deploy-status)](https://app.netlify.com/projects/react-tanstarter/deploys)
+
+The [vite config](./vite.config.ts#L16-L17) is currently configured to deploy on Netlify.
 
 Please refer to the [TanStack Start hosting docs](https://tanstack.com/start/latest/docs/framework/react/hosting) for deploying to other platforms.
 
@@ -57,7 +54,6 @@ Please refer to the [TanStack Start hosting docs](https://tanstack.com/start/lat
 - [React Compiler docs](https://react.dev/learn/react-compiler), [Working Group](https://github.com/reactwg/react-compiler/discussions) - React Compiler is in RC.
 - [Start BETA Tracking](https://github.com/TanStack/router/discussions/2863) - TanStack Start is in RC.
 - [Devtools Releases](https://github.com/TanStack/devtools/releases) - TanStack Devtools is in alpha and may still have breaking changes.
-- [Nitro v3 Beta](https://github.com/nitrojs/nitro/blob/v3/docs/1.guide/00.migration.md) - We're currently using Nitro v3 Nightly for Vercel deployment by default.
 
 ## Goodies
 

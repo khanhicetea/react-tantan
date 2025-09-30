@@ -10,7 +10,6 @@ import tseslint from "typescript-eslint";
 const { plugins: _, ...reactHooksConfig } = reactHooks.configs.recommended;
 
 export default defineConfig({
-  ignores: ["dist", ".wrangler", ".vercel", ".netlify", ".output", "build/"],
   files: ["**/*.{ts,tsx}"],
   languageOptions: {
     parser: tseslint.parser,
@@ -36,4 +35,5 @@ export default defineConfig({
     // You can override any rules here
     "@typescript-eslint/no-deprecated": "warn",
   },
+  ignores: ["dist", ".wrangler", ".vercel", ".netlify", ".output", "build/"],
 });
