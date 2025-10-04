@@ -7,8 +7,6 @@ import reactHooks from "eslint-plugin-react-hooks";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
 
-const { plugins: _, ...reactHooksConfig } = reactHooks.configs.recommended;
-
 export default defineConfig({
   files: ["**/*.{ts,tsx}"],
   languageOptions: {
@@ -27,7 +25,7 @@ export default defineConfig({
     eslintConfigPrettier,
     ...pluginQuery.configs["flat/recommended"],
     ...pluginRouter.configs["flat/recommended"],
-    reactHooksConfig,
+    reactHooks.configs["recommended-latest"],
     react.configs["recommended-type-checked"],
     // ...you can add plugins or configs here
   ],
