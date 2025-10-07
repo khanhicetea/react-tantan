@@ -1,0 +1,31 @@
+node_modules
+npm-debug.log
+.next
+.nuxt
+.output
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.git
+.gitignore
+README.md
+.eslintcache
+.nyc_output
+coverage
+.vercel
+.turbo
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
