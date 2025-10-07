@@ -57,8 +57,8 @@ importers:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       nitro:
-        specifier: npm:nitro-nightly
-        version: nitro-nightly@3.0.0-20251007-150409-8b53e464(drizzle-orm@0.44.6(kysely@0.28.7)(postgres@3.4.7))(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1))
+        specifier: npm:nitro-nightly@3.0.0-20251007-155759-75b985fb
+        version: nitro-nightly@3.0.0-20251007-155759-75b985fb(drizzle-orm@0.44.6(kysely@0.28.7)(postgres@3.4.7))(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1))
       postgres:
         specifier: ^3.4.7
         version: 3.4.7
@@ -2583,8 +2583,8 @@ packages:
   nf3@0.1.1:
     resolution: {integrity: sha512-iJfiw84oKzsOOM+zqr0fycjgLx2wLw1RrGLHd9qxUPwMtut6GjBalDS9TRPZJXMAZjUv9ghLgtDrhzqcFJ8eTQ==}
 
-  nitro-nightly@3.0.0-20251007-150409-8b53e464:
-    resolution: {integrity: sha512-BCRgcGl6fTOMoZiugQYVUTdSQyA+A5O6utkRBOAnm4vbkGpQ2C6Jsy42AflPBp2vCaky+b66Lgbza2gr45F1kg==}
+  nitro-nightly@3.0.0-20251007-155759-75b985fb:
+    resolution: {integrity: sha512-qk/WYz21MHapez0oTklj7ZWq03uGy6PyfdDG0uncB4BOGvsLAh9yITUR+YcXwe4sH/MjOOoZ5qViE4yCPyvkOw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5858,7 +5858,7 @@ snapshots:
 
   nf3@0.1.1: {}
 
-  nitro-nightly@3.0.0-20251007-150409-8b53e464(drizzle-orm@0.44.6(kysely@0.28.7)(postgres@3.4.7))(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)):
+  nitro-nightly@3.0.0-20251007-155759-75b985fb(drizzle-orm@0.44.6(kysely@0.28.7)(postgres@3.4.7))(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)):
     dependencies:
       consola: 3.4.2
       cookie-es: 2.0.0

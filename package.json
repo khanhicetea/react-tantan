@@ -34,7 +34,7 @@
     "drizzle-orm": "^0.44.6",
     "lucide-react": "^0.544.0",
     "next-themes": "^0.4.6",
-    "nitro": "npm:nitro-nightly",
+    "nitro": "npm:nitro-nightly@3.0.0-20251007-155759-75b985fb",
     "postgres": "^3.4.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
