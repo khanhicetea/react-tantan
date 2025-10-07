@@ -1,5 +1,8 @@
 import { createEnv } from "@t3-oss/env-core";
 import * as z from "zod";
+import { config } from "dotenv";
+
+config();
 
 export const env = createEnv({
   clientPrefix: "VITE_",
