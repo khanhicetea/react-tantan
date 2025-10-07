@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import authClient from "~/lib/auth/auth-client";
+import { useForm } from "react-hook-form"
 
 export const Route = createFileRoute("/(auth-pages)/login")({
   component: LoginForm,
@@ -14,6 +15,16 @@ export const Route = createFileRoute("/(auth-pages)/login")({
 
 function LoginForm() {
   const { redirectUrl } = Route.useRouteContext();
+
+  const {
+    register,
+    handleSubmit,
+  }  = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const { mutate: emailLoginMutate, isPending } = useMutation({
     mutationFn: async (data: { email: string; password: string }) =>
@@ -26,32 +37,13 @@ function LoginForm() {
           onError: ({ error }) => {
             toast.error(error.message || "An error occurred while signing in.");
           },
-          // better-auth seems to trigger a hard navigation on login,
-          // so we don't have to revalidate & navigate ourselves
-          // onSuccess: () => {
-          //   queryClient.removeQueries({ queryKey: authQueryOptions().queryKey });
-          //   navigate({ to: redirectUrl });
-          // },
         },
       ),
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isPending) return;
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    if (!email || !password) return;
-
-    emailLoginMutate({ email, password });
-  };
-
   return (
     <div className="flex flex-col gap-6">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit((data) => emailLoginMutate(data))}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <a href="#" className="flex flex-col items-center gap-2 font-medium">
@@ -67,7 +59,7 @@ function LoginForm() {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                name="email"
+                {...register("email")}
                 type="email"
                 placeholder="hello@example.com"
                 readOnly={isPending}
@@ -78,7 +70,7 @@ function LoginForm() {
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                name="password"
+                {...register("password")}
                 type="password"
                 placeholder="Enter password here"
                 readOnly={isPending}

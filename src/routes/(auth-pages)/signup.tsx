@@ -8,6 +8,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import authClient from "~/lib/auth/auth-client";
 import { authQueryOptions } from "~/lib/auth/queries";
+import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/(auth-pages)/signup")({
   component: SignupForm,
@@ -17,6 +18,18 @@ function SignupForm() {
   const { redirectUrl } = Route.useRouteContext();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
 
   const { mutate: signupMutate, isPending } = useMutation({
     mutationFn: async (data: { name: string; email: string; password: string }) => {
@@ -38,29 +51,18 @@ function SignupForm() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isPending) return;
-
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirm_password") as string;
-
-    if (!name || !email || !password || !confirmPassword) return;
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
-      return;
-    }
-
-    signupMutate({ name, email, password });
-  };
-
   return (
     <div className="flex flex-col gap-6">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(({ name, email, password, confirmPassword }) => {
+          if (isPending) return;
+
+          if (password !== confirmPassword) {
+            toast.error("Passwords do not match.");
+            return;
+          }
+
+          signupMutate({ name, email, password });
+        })}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <a href="#" className="flex flex-col items-center gap-2 font-medium">
@@ -76,7 +78,7 @@ function SignupForm() {
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
-                name="name"
+                {...register("name")}
                 type="text"
                 placeholder="John Doe"
                 readOnly={isPending}
@@ -87,7 +89,7 @@ function SignupForm() {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                name="email"
+                {...register("email")}
                 type="email"
                 placeholder="hello@example.com"
                 readOnly={isPending}
@@ -98,7 +100,7 @@ function SignupForm() {
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                name="password"
+                {...register("password")}
                 type="password"
                 placeholder="Password"
                 readOnly={isPending}
@@ -106,10 +108,10 @@ function SignupForm() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="confirm_password">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
-                id="confirm_password"
-                name="confirm_password"
+                id="confirmPassword"
+                {...register("confirmPassword")}
                 type="password"
                 placeholder="Confirm Password"
                 readOnly={isPending}
