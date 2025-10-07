@@ -1,11 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { GalleryVerticalEnd, LoaderCircle } from "lucide-react";
+import { GalleryVerticalEnd, LoaderCircle, User, Mail, Lock, Check } from "lucide-react";
 import { toast } from "sonner";
 import { SignInSocialButton } from "~/components/sign-in-social-button";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "~/components/ui/input-group";
 import authClient from "~/lib/auth/auth-client";
 import { authQueryOptions } from "~/lib/auth/queries";
 import { useForm } from "react-hook-form";
@@ -76,47 +80,67 @@ function SignupForm() {
           <div className="flex flex-col gap-5">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                {...register("name")}
-                type="text"
-                placeholder="John Doe"
-                readOnly={isPending}
-                required
-              />
+              <InputGroup>
+                <InputGroupAddon>
+                  <User className="h-4 w-4" />
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="name"
+                  {...register("name")}
+                  type="text"
+                  placeholder="John Doe"
+                  readOnly={isPending}
+                  required
+                />
+              </InputGroup>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                {...register("email")}
-                type="email"
-                placeholder="hello@example.com"
-                readOnly={isPending}
-                required
-              />
+              <InputGroup>
+                <InputGroupAddon>
+                  <Mail className="h-4 w-4" />
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="email"
+                  {...register("email")}
+                  type="email"
+                  placeholder="hello@example.com"
+                  readOnly={isPending}
+                  required
+                />
+              </InputGroup>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                {...register("password")}
-                type="password"
-                placeholder="Password"
-                readOnly={isPending}
-                required
-              />
+              <InputGroup>
+                <InputGroupAddon>
+                  <Lock className="h-4 w-4" />
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="password"
+                  {...register("password")}
+                  type="password"
+                  placeholder="Password"
+                  readOnly={isPending}
+                  required
+                />
+              </InputGroup>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                {...register("confirmPassword")}
-                type="password"
-                placeholder="Confirm Password"
-                readOnly={isPending}
-                required
-              />
+              <InputGroup>
+                <InputGroupAddon>
+                  <Check className="h-4 w-4" />
+                </InputGroupAddon>
+                <InputGroupInput
+                  id="confirmPassword"
+                  {...register("confirmPassword")}
+                  type="password"
+                  placeholder="Confirm Password"
+                  readOnly={isPending}
+                  required
+                />
+              </InputGroup>
             </div>
             <Button type="submit" className="mt-2 w-full" size="lg" disabled={isPending}>
               {isPending && <LoaderCircle className="animate-spin" />}
