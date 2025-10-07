@@ -12,6 +12,7 @@ node_modules
 
 .data
 .vercel
+.nitro
 .output
 .wrangler
 .netlify
