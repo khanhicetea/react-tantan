@@ -21,6 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build the application
+RUN echo $VITE_BASE_URL
 RUN pnpm run build
 
 # Production image
