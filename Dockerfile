@@ -34,6 +34,7 @@ RUN adduser --system --uid 1001 tanstack
 # Copy built application from builder stage
 COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install only production dependencies
 RUN pnpm install --frozen-lockfile --prod
