@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { GalleryVerticalEnd, LoaderCircle, User, Mail, Lock, Check } from "lucide-react";
+import { Check, GalleryVerticalEnd, LoaderCircle, Lock, Mail, User } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { SignInSocialButton } from "~/components/sign-in-social-button";
 import { Button } from "~/components/ui/button";
-import { Label } from "~/components/ui/label";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "~/components/ui/input-group";
+import { Label } from "~/components/ui/label";
 import authClient from "~/lib/auth/auth-client";
 import { authQueryOptions } from "~/lib/auth/queries";
-import { useForm } from "react-hook-form";
 
 export const Route = createFileRoute("/(auth-pages)/signup")({
   component: SignupForm,
@@ -23,10 +23,7 @@ function SignupForm() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -57,7 +54,8 @@ function SignupForm() {
 
   return (
     <div className="flex flex-col gap-6">
-      <form onSubmit={handleSubmit(({ name, email, password, confirmPassword }) => {
+      <form
+        onSubmit={handleSubmit(({ name, email, password, confirmPassword }) => {
           if (isPending) return;
 
           if (password !== confirmPassword) {
@@ -66,7 +64,8 @@ function SignupForm() {
           }
 
           signupMutate({ name, email, password });
-        })}>
+        })}
+      >
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <a href="#" className="flex flex-col items-center gap-2 font-medium">

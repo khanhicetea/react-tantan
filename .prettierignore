@@ -4,6 +4,9 @@ package-lock.json
 yarn.lock
 bun.lock
 
+# shadcn components
+src/components/ui/
+
 # misc
 routeTree.gen.ts
 .tanstack/

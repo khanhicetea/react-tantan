@@ -1,12 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import { SignOutButton } from "~/components/sign-out-button";
+import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/(authenticated)/dashboard/")({
   component: DashboardIndex,
 });
 
+export const $getTime = createServerFn({ method: "GET" }).handler(async () => {
+  return new Date().toISOString()
+});
+
 function DashboardIndex() {
   const { user } = Route.useRouteContext();
+  const [time, setTime] = useState<string | null>(null);
 
   return (
     <div className="flex flex-col items-center gap-1">
@@ -19,6 +27,8 @@ function DashboardIndex() {
         <pre className="max-w-screen overflow-x-auto px-2 text-start">
           {JSON.stringify(user, null, 2)}
         </pre>
+        <Button onClick={() => $getTime().then((time) => setTime(time))}>Get time</Button>
+        {time && <p>Time: {time}</p>}
       </div>
       <SignOutButton />
     </div>

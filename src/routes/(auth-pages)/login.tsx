@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { GalleryVerticalEnd, LoaderCircle, Mail, Lock } from "lucide-react";
+import { GalleryVerticalEnd, LoaderCircle, Lock, Mail } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { SignInSocialButton } from "~/components/sign-in-social-button";
 import { Button } from "~/components/ui/button";
-import { Label } from "~/components/ui/label";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "~/components/ui/input-group";
+import { Label } from "~/components/ui/label";
 import authClient from "~/lib/auth/auth-client";
-import { useForm } from "react-hook-form"
 
 export const Route = createFileRoute("/(auth-pages)/login")({
   component: LoginForm,
@@ -20,10 +20,7 @@ export const Route = createFileRoute("/(auth-pages)/login")({
 function LoginForm() {
   const { redirectUrl } = Route.useRouteContext();
 
-  const {
-    register,
-    handleSubmit,
-  }  = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: "",
