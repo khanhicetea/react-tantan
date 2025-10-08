@@ -1,7 +1,7 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import authClient from "~/lib/auth/auth-client";
-import { authQueryOptions } from "~/lib/auth/queries";
+import authClient from "@/lib/auth/auth-client";
+import { authQueryOptions } from "@/lib/auth/queries";
 
 export function useAuth() {
     const queryClient = useQueryClient();

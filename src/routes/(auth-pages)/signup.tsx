@@ -3,16 +3,16 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, GalleryVerticalEnd, LoaderCircle, Lock, Mail, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { SignInSocialButton } from "~/components/sign-in-social-button";
-import { Button } from "~/components/ui/button";
+import { SignInSocialButton } from "@/components/sign-in-social-button";
+import { Button } from "@/components/ui/button";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "~/components/ui/input-group";
-import { Label } from "~/components/ui/label";
-import authClient from "~/lib/auth/auth-client";
-import { authQueryOptions } from "~/lib/auth/queries";
+} from "@/components/ui/input-group";
+import { Label } from "@/components/ui/label";
+import authClient from "@/lib/auth/auth-client";
+import { authQueryOptions } from "@/lib/auth/queries";
 
 export const Route = createFileRoute("/(auth-pages)/signup")({
   component: SignupForm,

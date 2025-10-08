@@ -1,5 +1,5 @@
-import { Button } from "~/components/ui/button";
-import { useAuth } from "~/hooks/use-auth";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
 
 export function SignOutButton() {
   const { signOut } = useAuth();

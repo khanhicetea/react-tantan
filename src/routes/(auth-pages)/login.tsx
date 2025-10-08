@@ -3,15 +3,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { GalleryVerticalEnd, LoaderCircle, Lock, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { SignInSocialButton } from "~/components/sign-in-social-button";
-import { Button } from "~/components/ui/button";
+import { SignInSocialButton } from "@/components/sign-in-social-button";
+import { Button } from "@/components/ui/button";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "~/components/ui/input-group";
-import { Label } from "~/components/ui/label";
-import authClient from "~/lib/auth/auth-client";
+} from "@/components/ui/input-group";
+import { Label } from "@/components/ui/label";
+import authClient from "@/lib/auth/auth-client";
 
 export const Route = createFileRoute("/(auth-pages)/login")({
   component: LoginForm,

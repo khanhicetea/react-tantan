@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { SignOutButton } from "~/components/sign-out-button";
-import { Button } from "~/components/ui/button";
+import { SignOutButton } from "@/components/sign-out-button";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/(authenticated)/dashboard/")({
   component: DashboardIndex,
