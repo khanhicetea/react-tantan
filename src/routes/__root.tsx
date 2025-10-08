@@ -11,7 +11,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { authQueryOptions, type AuthQueryResult } from "~/lib/auth/queries";
+import { authQueryOptions, type AuthSession } from "~/lib/auth/queries";
 import appCss from "~/styles.css?url";
 
 import { ThemeProvider } from "~/components/theme-provider";
@@ -19,7 +19,7 @@ import { Toaster } from "~/components/ui/sonner";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  user: AuthQueryResult;
+  user: AuthSession;
 }>()({
   beforeLoad: ({ context }) => {
     // we're using react-query for client-side caching to reduce client-to-server calls, see /src/router.tsx
