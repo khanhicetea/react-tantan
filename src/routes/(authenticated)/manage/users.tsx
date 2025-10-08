@@ -6,6 +6,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { DataTablePagination } from "@/components/common/data-table-pagination";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -15,23 +17,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { db } from "@/lib/db";
-import { Badge } from "@/components/ui/badge";
-import { z } from "zod";
-import { count } from "drizzle-orm";
 import { user } from "@/lib/db/schema";
-import { createServerFn } from "@tanstack/react-start";
 import type { UserSelect } from "@/lib/db/types";
-import { DataTablePagination } from "@/components/common/data-table-pagination";
+import { createServerFn } from "@tanstack/react-start";
+import { count } from "drizzle-orm";
+import { z } from "zod";
 
 const searchParamsSchema = z.object({
-  page: z.number().int().positive().catch(1),
+  page: z.number().int().positive().default(1),
 });
 
 const pageSize = 1;
 
-export const $loadUsers = createServerFn().inputValidator(z.object({
-  page: z.number().int().positive().catch(1),
-})).handler(async ({data}) => {
+export const $loadUsers = createServerFn()
+  .inputValidator(searchParamsSchema)
+  .handler(async ({ data }) => {
     const page = data.page;
     const limit = pageSize;
     const offset = (page - 1) * limit;
@@ -49,7 +49,7 @@ export const $loadUsers = createServerFn().inputValidator(z.object({
       totalCount: totalCountResult[0]?.count ?? 0,
       pageCount: Math.ceil((totalCountResult[0]?.count ?? 0) / limit),
     };
-});
+  });
 
 export const Route = createFileRoute("/(authenticated)/manage/users")({
   component: RouteComponent,
@@ -120,7 +120,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Users</h1>
+      <h1 className="mb-4 text-2xl font-bold">Users</h1>
       <div className="space-y-4">
         <div className="overflow-hidden rounded-md border">
           <Table>
@@ -132,7 +132,10 @@ function RouteComponent() {
                       <TableHead key={header.id}>
                         {header.isPlaceholder
                           ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
                       </TableHead>
                     );
                   })}
