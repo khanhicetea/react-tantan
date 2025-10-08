@@ -18,6 +18,7 @@ import { Route as authPagesLoginRouteImport } from './routes/(auth-pages)/login'
 import { Route as authenticatedDashboardRouteRouteImport } from './routes/(authenticated)/dashboard/route'
 import { Route as authenticatedDashboardIndexRouteImport } from './routes/(authenticated)/dashboard/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as authenticatedDashboardAccountAccountViewRouteImport } from './routes/(authenticated)/dashboard/account/$accountView'
 
 const authenticatedRouteRoute = authenticatedRouteRouteImport.update({
   id: '/(authenticated)',
@@ -64,6 +65,12 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authenticatedDashboardAccountAccountViewRoute =
+  authenticatedDashboardAccountAccountViewRouteImport.update({
+    id: '/account/$accountView',
+    path: '/account/$accountView',
+    getParentRoute: () => authenticatedDashboardRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof authenticatedRouteRouteWithChildren
@@ -73,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/api/health': typeof ApiHealthRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/': typeof authenticatedDashboardIndexRoute
+  '/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof authenticatedRouteRouteWithChildren
@@ -81,6 +89,7 @@ export interface FileRoutesByTo {
   '/api/health': typeof ApiHealthRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard': typeof authenticatedDashboardIndexRoute
+  '/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,6 +102,7 @@ export interface FileRoutesById {
   '/api/health': typeof ApiHealthRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/(authenticated)/dashboard/': typeof authenticatedDashboardIndexRoute
+  '/(authenticated)/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,8 +114,16 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/api/auth/$'
     | '/dashboard/'
+    | '/dashboard/account/$accountView'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/api/health' | '/api/auth/$' | '/dashboard'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/api/health'
+    | '/api/auth/$'
+    | '/dashboard'
+    | '/dashboard/account/$accountView'
   id:
     | '__root__'
     | '/'
@@ -117,6 +135,7 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/api/auth/$'
     | '/(authenticated)/dashboard/'
+    | '/(authenticated)/dashboard/account/$accountView'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(authenticated)/dashboard/account/$accountView': {
+      id: '/(authenticated)/dashboard/account/$accountView'
+      path: '/account/$accountView'
+      fullPath: '/dashboard/account/$accountView'
+      preLoaderRoute: typeof authenticatedDashboardAccountAccountViewRouteImport
+      parentRoute: typeof authenticatedDashboardRouteRoute
+    }
   }
 }
 
@@ -211,11 +237,14 @@ const authPagesRouteRouteWithChildren = authPagesRouteRoute._addFileChildren(
 
 interface authenticatedDashboardRouteRouteChildren {
   authenticatedDashboardIndexRoute: typeof authenticatedDashboardIndexRoute
+  authenticatedDashboardAccountAccountViewRoute: typeof authenticatedDashboardAccountAccountViewRoute
 }
 
 const authenticatedDashboardRouteRouteChildren: authenticatedDashboardRouteRouteChildren =
   {
     authenticatedDashboardIndexRoute: authenticatedDashboardIndexRoute,
+    authenticatedDashboardAccountAccountViewRoute:
+      authenticatedDashboardAccountAccountViewRoute,
   }
 
 const authenticatedDashboardRouteRouteWithChildren =

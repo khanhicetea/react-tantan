@@ -1,15 +1,15 @@
+import { SignOutButton } from "@/components/sign-out-button";
+import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { SignOutButton } from "@/components/sign-out-button";
-import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/(authenticated)/dashboard/")({
   component: DashboardIndex,
 });
 
 export const $getTime = createServerFn({ method: "GET" }).handler(async () => {
-  return new Date().toISOString()
+  return new Date().toISOString();
 });
 
 function DashboardIndex() {

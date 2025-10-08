@@ -14,6 +14,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { authQueryOptions, type AuthSession } from "@/lib/auth/queries";
 import appCss from "@/styles.css?url";
 
+import { BetterAuthProvider } from "@/components/better-auth-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -68,10 +69,12 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ThemeProvider>
-          {children}
-          <Toaster richColors />
-        </ThemeProvider>
+        <BetterAuthProvider>
+          <ThemeProvider>
+            {children}
+            <Toaster richColors />
+          </ThemeProvider>
+        </BetterAuthProvider>
 
         <TanStackDevtools
           plugins={[
