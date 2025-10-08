@@ -1,55 +1,76 @@
 # Multi-stage build for TanStack Start application
 FROM node:22-alpine AS base
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm globally
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Create non-root user for security
-RUN addgroup --system --gid 1001 app
-RUN adduser --system --uid 1001 app
+RUN addgroup --system --gid 1001 app && \
+    adduser --system --uid 1001 app
+
+WORKDIR /app
 
 # Install dependencies only when needed
 FROM base AS deps
-USER app
-WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+# Copy package files with proper ownership
+COPY --chown=app:app package.json pnpm-lock.yaml ./
+
+# Install all dependencies (needed for build)
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
 
 # Build the application
 FROM base AS builder
-USER app
-WORKDIR /app
 
 # Copy dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY --from=deps --chown=app:app /app/node_modules ./node_modules
+COPY --chown=app:app . .
+
+# Build arguments for environment variables
+ARG VITE_BASE_URL
+ENV VITE_BASE_URL=$VITE_BASE_URL
 
 # Build the application
-ARG VITE_BASE_URL
-
-RUN echo $VITE_BASE_URL
 RUN pnpm run build
 
-# Production image
-FROM base AS runner
-USER app
+# Production image - minimal runtime
+FROM node:22-alpine AS runner
+
+# Install pnpm for production
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Create non-root user
+RUN addgroup --system --gid 1001 app && \
+    adduser --system --uid 1001 app
+
 WORKDIR /app
 
-# Copy built application from builder stage
-COPY --from=builder /app/.output ./.output
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
+# Copy only necessary files for production
+COPY --from=builder --chown=app:app /app/.output ./.output
+COPY --from=builder --chown=app:app /app/package.json ./package.json
+COPY --from=builder --chown=app:app /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile --prod
 
-# Expose port (default for Nitro is 3000)
-EXPOSE 3000
+# Switch to non-root user
+USER app
 
 # Set environment to production
 ENV NODE_ENV=production
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+# HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+#     CMD node -e "require('http').get('http://localhost:8080/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" || exit 1
 
 # Start the application
 CMD ["node", ".output/server/index.mjs"]
