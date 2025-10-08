@@ -19,8 +19,7 @@ FROM base AS deps
 COPY --chown=app:app package.json pnpm-lock.yaml ./
 
 # Install all dependencies (needed for build)
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 # Build the application
 FROM base AS builder
@@ -56,8 +55,7 @@ COPY --from=builder --chown=app:app /app/package.json ./package.json
 COPY --from=builder --chown=app:app /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install only production dependencies
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile --prod
 
 # Switch to non-root user
 USER app
