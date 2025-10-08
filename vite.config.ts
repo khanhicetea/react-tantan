@@ -13,7 +13,12 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
     tanstackStart(),
-    nitro({ config: { preset: "node-server" } }),
+    nitro({
+      config: {
+        preset: "node-server",
+        compressPublicAssets: { gzip: true, brotli: true },
+      },
+    }),
     // https://tanstack.com/start/latest/docs/framework/react/hosting
     viteReact({
       // https://react.dev/learn/react-compiler
