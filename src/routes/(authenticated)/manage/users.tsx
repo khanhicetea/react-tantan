@@ -21,16 +21,18 @@ import { user } from "@/lib/db/schema";
 import type { UserSelect } from "@/lib/db/types";
 import { createServerFn } from "@tanstack/react-start";
 import { count } from "drizzle-orm";
-import { z } from "zod";
+import * as z from "zod";
 
 const searchParamsSchema = z.object({
-  page: z.number().int().positive().default(1),
+  page: z.number().int().positive().catch(1),
 });
 
 const pageSize = 1;
 
-export const $loadUsers = createServerFn()
-  .inputValidator(searchParamsSchema)
+export const paginateUsers = createServerFn({method: "POST"})
+  .inputValidator(z.object({
+    page: z.number().int().positive().catch(1),
+  }))
   .handler(async ({ data }) => {
     const page = data.page;
     const limit = pageSize;
@@ -56,7 +58,7 @@ export const Route = createFileRoute("/(authenticated)/manage/users")({
   validateSearch: searchParamsSchema,
   loaderDeps: ({ search }) => ({ page: search.page }),
   loader: async ({ deps }) => {
-    return await $loadUsers({ data: deps });
+    return await paginateUsers({ data: deps });
   },
 });
 
