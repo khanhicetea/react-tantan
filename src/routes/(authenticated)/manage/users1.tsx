@@ -19,17 +19,20 @@ import {
 
 import * as z from "zod";
 import type { UserSelect } from "@/lib/db/types";
-import { $paginateUsers } from "@/functions/users";
 
 
-export const Route = createFileRoute("/(authenticated)/manage/users")({
+export const Route = createFileRoute("/(authenticated)/manage/users1")({
   component: RouteComponent,
   validateSearch: z.object({
     page: z.number().int().positive().catch(1),
   }),
   loaderDeps: ({ search }) => ({ page: search.page }),
-  loader: async ({ deps }) => {
-    return await $paginateUsers({ data: deps });
+  loader: async ({ deps, context }) => {
+    const data = await context.rpcClient.user.paginateUsers({
+      page: deps.page,
+    })
+
+    return data
   },
 });
 

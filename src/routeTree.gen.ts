@@ -18,7 +18,9 @@ import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authenticatedManageRouteRouteImport } from './routes/(authenticated)/manage/route'
 import { Route as authenticatedDashboardRouteRouteImport } from './routes/(authenticated)/dashboard/route'
 import { Route as authenticatedDashboardIndexRouteImport } from './routes/(authenticated)/dashboard/index'
+import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as authenticatedManageUsers1RouteImport } from './routes/(authenticated)/manage/users1'
 import { Route as authenticatedManageUsersRouteImport } from './routes/(authenticated)/manage/users'
 import { Route as authenticatedDashboardAccountAccountViewRouteImport } from './routes/(authenticated)/dashboard/account/$accountView'
 
@@ -68,11 +70,22 @@ const authenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => authenticatedDashboardRouteRoute,
   } as any)
+const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
+  id: '/api/rpc/$',
+  path: '/api/rpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authenticatedManageUsers1Route =
+  authenticatedManageUsers1RouteImport.update({
+    id: '/users1',
+    path: '/users1',
+    getParentRoute: () => authenticatedManageRouteRoute,
+  } as any)
 const authenticatedManageUsersRoute =
   authenticatedManageUsersRouteImport.update({
     id: '/users',
@@ -94,7 +107,9 @@ export interface FileRoutesByFullPath {
   '/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
   '/manage/users': typeof authenticatedManageUsersRoute
+  '/manage/users1': typeof authenticatedManageUsers1Route
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
   '/dashboard/': typeof authenticatedDashboardIndexRoute
   '/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
@@ -105,7 +120,9 @@ export interface FileRoutesByTo {
   '/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
   '/manage/users': typeof authenticatedManageUsersRoute
+  '/manage/users1': typeof authenticatedManageUsers1Route
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
   '/dashboard': typeof authenticatedDashboardIndexRoute
   '/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
@@ -120,7 +137,9 @@ export interface FileRoutesById {
   '/(auth)/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
   '/(authenticated)/manage/users': typeof authenticatedManageUsersRoute
+  '/(authenticated)/manage/users1': typeof authenticatedManageUsers1Route
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
   '/(authenticated)/dashboard/': typeof authenticatedDashboardIndexRoute
   '/(authenticated)/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
@@ -134,7 +153,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/api/health'
     | '/manage/users'
+    | '/manage/users1'
     | '/api/auth/$'
+    | '/api/rpc/$'
     | '/dashboard/'
     | '/dashboard/account/$accountView'
   fileRoutesByTo: FileRoutesByTo
@@ -145,7 +166,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/api/health'
     | '/manage/users'
+    | '/manage/users1'
     | '/api/auth/$'
+    | '/api/rpc/$'
     | '/dashboard'
     | '/dashboard/account/$accountView'
   id:
@@ -159,7 +182,9 @@ export interface FileRouteTypes {
     | '/(auth)/signup'
     | '/api/health'
     | '/(authenticated)/manage/users'
+    | '/(authenticated)/manage/users1'
     | '/api/auth/$'
+    | '/api/rpc/$'
     | '/(authenticated)/dashboard/'
     | '/(authenticated)/dashboard/account/$accountView'
   fileRoutesById: FileRoutesById
@@ -170,6 +195,7 @@ export interface RootRouteChildren {
   authenticatedRouteRoute: typeof authenticatedRouteRouteWithChildren
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiRpcSplatRoute: typeof ApiRpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -237,12 +263,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedDashboardIndexRouteImport
       parentRoute: typeof authenticatedDashboardRouteRoute
     }
+    '/api/rpc/$': {
+      id: '/api/rpc/$'
+      path: '/api/rpc/$'
+      fullPath: '/api/rpc/$'
+      preLoaderRoute: typeof ApiRpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/(authenticated)/manage/users1': {
+      id: '/(authenticated)/manage/users1'
+      path: '/users1'
+      fullPath: '/manage/users1'
+      preLoaderRoute: typeof authenticatedManageUsers1RouteImport
+      parentRoute: typeof authenticatedManageRouteRoute
     }
     '/(authenticated)/manage/users': {
       id: '/(authenticated)/manage/users'
@@ -294,11 +334,13 @@ const authenticatedDashboardRouteRouteWithChildren =
 
 interface authenticatedManageRouteRouteChildren {
   authenticatedManageUsersRoute: typeof authenticatedManageUsersRoute
+  authenticatedManageUsers1Route: typeof authenticatedManageUsers1Route
 }
 
 const authenticatedManageRouteRouteChildren: authenticatedManageRouteRouteChildren =
   {
     authenticatedManageUsersRoute: authenticatedManageUsersRoute,
+    authenticatedManageUsers1Route: authenticatedManageUsers1Route,
   }
 
 const authenticatedManageRouteRouteWithChildren =
@@ -326,6 +368,7 @@ const rootRouteChildren: RootRouteChildren = {
   authenticatedRouteRoute: authenticatedRouteRouteWithChildren,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiRpcSplatRoute: ApiRpcSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

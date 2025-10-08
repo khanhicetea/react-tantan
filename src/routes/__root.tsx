@@ -17,10 +17,13 @@ import appCss from "@/styles.css?url";
 import { BetterAuthProvider } from "@/components/better-auth-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import type { ORPCClient, ORPCQueryClient } from "@/orpc/client";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   user: AuthSession;
+  orpc: ORPCQueryClient;
+  rpcClient: ORPCClient;
 }>()({
   beforeLoad: ({ context }) => {
     // we're using react-query for client-side caching to reduce client-to-server calls, see /src/router.tsx

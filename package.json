@@ -20,6 +20,9 @@
   "dependencies": {
     "@daveyplate/better-auth-tanstack": "^1.3.6",
     "@daveyplate/better-auth-ui": "^3.2.5",
+    "@orpc/client": "^1.9.3",
+    "@orpc/server": "^1.9.3",
+    "@orpc/tanstack-query": "^1.9.3",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",

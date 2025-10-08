@@ -5,6 +5,7 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { DefaultCatchBoundary } from "@/components/default-catch-boundary";
 import { DefaultNotFound } from "@/components/default-not-found";
 import { routeTree } from "./routeTree.gen";
+import { orpc, rpcClient } from "./orpc/client";
 
 export function getRouter() {
   const queryClient = new QueryClient({
@@ -18,7 +19,7 @@ export function getRouter() {
 
   const router = createRouter({
     routeTree,
-    context: { queryClient, user: null },
+    context: { queryClient, user: null, orpc: orpc, rpcClient: rpcClient },
     defaultPreload: "intent",
     // react-query will handle data fetching & caching
     // https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#passing-all-loader-events-to-an-external-cache
