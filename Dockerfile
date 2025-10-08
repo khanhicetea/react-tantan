@@ -30,7 +30,6 @@ COPY --chown=app:app . .
 
 # Build arguments for environment variables
 ARG VITE_BASE_URL
-ENV VITE_BASE_URL=$VITE_BASE_URL
 
 # Build the application
 RUN pnpm run build

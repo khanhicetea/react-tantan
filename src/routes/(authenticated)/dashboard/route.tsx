@@ -1,31 +1,56 @@
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { Button } from "~/components/ui/button";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+
+import { AppSidebar } from "~/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "~/components/ui/breadcrumb"
+import { Separator } from "~/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "~/components/ui/sidebar"
 
 export const Route = createFileRoute("/(authenticated)/dashboard")({
   component: DashboardLayout,
 });
 
-function DashboardLayout() {
+export default function DashboardLayout() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-10 p-2">
-      <div className="flex flex-col items-center gap-2">
-        <h1 className="text-3xl font-bold sm:text-4xl">Dashboard Layout</h1>
-        <pre className="bg-card text-card-foreground mb-4 rounded-md border p-1 text-xs">
-          routes/(authenticated)/dashboard/route.tsx
-        </pre>
-        <div className="text-foreground/80 mb-4 flex flex-col items-center gap-2 text-sm">
-          This is a protected layout from the authenticated layout route:
-          <pre className="bg-card text-card-foreground rounded-md border p-1 text-xs">
-            routes/(authenticated)/route.tsx
-          </pre>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Hello world</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <Outlet />
         </div>
-
-        <Button type="button" asChild className="w-fit" size="lg">
-          <Link to="/">Back to home</Link>
-        </Button>
-      </div>
-
-      <Outlet />
-    </div>
-  );
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
