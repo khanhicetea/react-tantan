@@ -16,49 +16,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/lib/db";
-import { user } from "@/lib/db/schema";
-import type { UserSelect } from "@/lib/db/types";
-import { createServerFn } from "@tanstack/react-start";
-import { count } from "drizzle-orm";
+
 import * as z from "zod";
+import type { UserSelect } from "@/lib/db/types";
+import { Button } from "@/components/ui/button";
+import { $paginateUsers } from "@/functions/users";
 
 const searchParamsSchema = z.object({
   page: z.number().int().positive().catch(1),
 });
-
-const pageSize = 1;
-
-export const paginateUsers = createServerFn({method: "POST"})
-  .inputValidator(z.object({
-    page: z.number().int().positive().catch(1),
-  }))
-  .handler(async ({ data }) => {
-    const page = data.page;
-    const limit = pageSize;
-    const offset = (page - 1) * limit;
-
-    const [users, totalCountResult] = await Promise.all([
-      db.query.user.findMany({
-        limit,
-        offset,
-      }),
-      db.select({ count: count() }).from(user),
-    ]);
-
-    return {
-      users,
-      totalCount: totalCountResult[0]?.count ?? 0,
-      pageCount: Math.ceil((totalCountResult[0]?.count ?? 0) / limit),
-    };
-  });
 
 export const Route = createFileRoute("/(authenticated)/manage/users")({
   component: RouteComponent,
   validateSearch: searchParamsSchema,
   loaderDeps: ({ search }) => ({ page: search.page }),
   loader: async ({ deps }) => {
-    return await paginateUsers({ data: deps });
+    return await $paginateUsers({ data: deps });
   },
 });
 
@@ -93,7 +66,7 @@ const columns: ColumnDef<UserSelect>[] = [
 ];
 
 function RouteComponent() {
-  const { users, totalCount, pageCount } = Route.useLoaderData();
+  const { users, totalCount, pageCount, pageSize } = Route.useLoaderData();
   const navigate = Route.useNavigate();
   const search = Route.useSearch();
   const currentPage = search.page;
