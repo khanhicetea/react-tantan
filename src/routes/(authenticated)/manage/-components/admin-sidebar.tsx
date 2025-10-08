@@ -1,6 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import * as React from "react";
 
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -12,8 +13,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
-import { NavUser } from "@/components/nav-user";
-
 
 // This is sample data.
 const data = {

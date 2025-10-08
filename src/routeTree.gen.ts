@@ -19,6 +19,7 @@ import { Route as authenticatedManageRouteRouteImport } from './routes/(authenti
 import { Route as authenticatedDashboardRouteRouteImport } from './routes/(authenticated)/dashboard/route'
 import { Route as authenticatedDashboardIndexRouteImport } from './routes/(authenticated)/dashboard/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as authenticatedManageUsersRouteImport } from './routes/(authenticated)/manage/users'
 import { Route as authenticatedDashboardAccountAccountViewRouteImport } from './routes/(authenticated)/dashboard/account/$accountView'
 
 const authenticatedRouteRoute = authenticatedRouteRouteImport.update({
@@ -72,6 +73,12 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authenticatedManageUsersRoute =
+  authenticatedManageUsersRouteImport.update({
+    id: '/users',
+    path: '/users',
+    getParentRoute: () => authenticatedManageRouteRoute,
+  } as any)
 const authenticatedDashboardAccountAccountViewRoute =
   authenticatedDashboardAccountAccountViewRouteImport.update({
     id: '/account/$accountView',
@@ -82,20 +89,22 @@ const authenticatedDashboardAccountAccountViewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof authenticatedRouteRouteWithChildren
   '/dashboard': typeof authenticatedDashboardRouteRouteWithChildren
-  '/manage': typeof authenticatedManageRouteRoute
+  '/manage': typeof authenticatedManageRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
+  '/manage/users': typeof authenticatedManageUsersRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/': typeof authenticatedDashboardIndexRoute
   '/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof authenticatedRouteRouteWithChildren
-  '/manage': typeof authenticatedManageRouteRoute
+  '/manage': typeof authenticatedManageRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
+  '/manage/users': typeof authenticatedManageUsersRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard': typeof authenticatedDashboardIndexRoute
   '/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
@@ -106,10 +115,11 @@ export interface FileRoutesById {
   '/(auth)': typeof authRouteRouteWithChildren
   '/(authenticated)': typeof authenticatedRouteRouteWithChildren
   '/(authenticated)/dashboard': typeof authenticatedDashboardRouteRouteWithChildren
-  '/(authenticated)/manage': typeof authenticatedManageRouteRoute
+  '/(authenticated)/manage': typeof authenticatedManageRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
+  '/(authenticated)/manage/users': typeof authenticatedManageUsersRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/(authenticated)/dashboard/': typeof authenticatedDashboardIndexRoute
   '/(authenticated)/dashboard/account/$accountView': typeof authenticatedDashboardAccountAccountViewRoute
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/api/health'
+    | '/manage/users'
     | '/api/auth/$'
     | '/dashboard/'
     | '/dashboard/account/$accountView'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/api/health'
+    | '/manage/users'
     | '/api/auth/$'
     | '/dashboard'
     | '/dashboard/account/$accountView'
@@ -146,6 +158,7 @@ export interface FileRouteTypes {
     | '/(auth)/login'
     | '/(auth)/signup'
     | '/api/health'
+    | '/(authenticated)/manage/users'
     | '/api/auth/$'
     | '/(authenticated)/dashboard/'
     | '/(authenticated)/dashboard/account/$accountView'
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(authenticated)/manage/users': {
+      id: '/(authenticated)/manage/users'
+      path: '/users'
+      fullPath: '/manage/users'
+      preLoaderRoute: typeof authenticatedManageUsersRouteImport
+      parentRoute: typeof authenticatedManageRouteRoute
+    }
     '/(authenticated)/dashboard/account/$accountView': {
       id: '/(authenticated)/dashboard/account/$accountView'
       path: '/account/$accountView'
@@ -272,15 +292,29 @@ const authenticatedDashboardRouteRouteWithChildren =
     authenticatedDashboardRouteRouteChildren,
   )
 
+interface authenticatedManageRouteRouteChildren {
+  authenticatedManageUsersRoute: typeof authenticatedManageUsersRoute
+}
+
+const authenticatedManageRouteRouteChildren: authenticatedManageRouteRouteChildren =
+  {
+    authenticatedManageUsersRoute: authenticatedManageUsersRoute,
+  }
+
+const authenticatedManageRouteRouteWithChildren =
+  authenticatedManageRouteRoute._addFileChildren(
+    authenticatedManageRouteRouteChildren,
+  )
+
 interface authenticatedRouteRouteChildren {
   authenticatedDashboardRouteRoute: typeof authenticatedDashboardRouteRouteWithChildren
-  authenticatedManageRouteRoute: typeof authenticatedManageRouteRoute
+  authenticatedManageRouteRoute: typeof authenticatedManageRouteRouteWithChildren
 }
 
 const authenticatedRouteRouteChildren: authenticatedRouteRouteChildren = {
   authenticatedDashboardRouteRoute:
     authenticatedDashboardRouteRouteWithChildren,
-  authenticatedManageRouteRoute: authenticatedManageRouteRoute,
+  authenticatedManageRouteRoute: authenticatedManageRouteRouteWithChildren,
 }
 
 const authenticatedRouteRouteWithChildren =
