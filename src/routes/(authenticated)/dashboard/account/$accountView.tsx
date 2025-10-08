@@ -7,7 +7,7 @@ export const Route = createFileRoute("/(authenticated)/dashboard/account/$accoun
 
 function RouteComponent() {
   const { accountView } = Route.useParams();
-  
+
   return (
     <main className="container p-4 md:p-6">
       <AccountView pathname={accountView} />

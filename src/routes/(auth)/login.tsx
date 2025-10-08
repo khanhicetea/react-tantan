@@ -8,66 +8,45 @@ import {
 } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import authClient from "@/lib/auth/auth-client";
-import { authQueryOptions } from "@/lib/auth/queries";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Check, GalleryVerticalEnd, LoaderCircle, Lock, Mail, User } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { GalleryVerticalEnd, LoaderCircle, Lock, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/(auth-pages)/signup")({
-  component: SignupForm,
+export const Route = createFileRoute("/(auth)/login")({
+  component: LoginForm,
 });
 
-function SignupForm() {
+function LoginForm() {
   const { redirectUrl } = Route.useRouteContext();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  const { mutate: signupMutate, isPending } = useMutation({
-    mutationFn: async (data: { name: string; email: string; password: string }) => {
-      await authClient.signUp.email(
+  const { mutate: emailLoginMutate, isPending } = useMutation({
+    mutationFn: async (data: { email: string; password: string }) =>
+      await authClient.signIn.email(
         {
           ...data,
           callbackURL: redirectUrl,
         },
         {
           onError: ({ error }) => {
-            toast.error(error.message || "An error occurred while signing up.");
-          },
-          onSuccess: () => {
-            queryClient.removeQueries({ queryKey: authQueryOptions().queryKey });
-            navigate({ to: redirectUrl });
+            toast.error(error.message || "An error occurred while signing in.");
           },
         },
-      );
-    },
+      ),
   });
 
   return (
     <Card className="overflow-hidden p-0">
       <CardContent className="grid p-0 md:grid-cols-2">
-        <form
-          onSubmit={handleSubmit(({ name, email, password, confirmPassword }) => {
-            if (isPending) return;
-
-            if (password !== confirmPassword) {
-              toast.error("Passwords do not match.");
-              return;
-            }
-
-            signupMutate({ name, email, password });
-          })}
-        >
+        <form onSubmit={handleSubmit((data) => emailLoginMutate(data))}>
           <div className="flex flex-col gap-6 p-4 lg:p-8">
             <div className="flex flex-col items-center gap-2">
               <a href="#" className="flex flex-col items-center gap-2 font-medium">
@@ -76,25 +55,9 @@ function SignupForm() {
                 </div>
                 <span className="sr-only">Acme Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">Sign up for Acme Inc.</h1>
+              <h1 className="text-xl font-bold">Welcome back to Acme Inc.</h1>
             </div>
             <div className="flex flex-col gap-5">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <InputGroup>
-                  <InputGroupAddon>
-                    <User className="h-4 w-4" />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="name"
-                    {...register("name")}
-                    type="text"
-                    placeholder="John Doe"
-                    readOnly={isPending}
-                    required
-                  />
-                </InputGroup>
-              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <InputGroup>
@@ -121,23 +84,7 @@ function SignupForm() {
                     id="password"
                     {...register("password")}
                     type="password"
-                    placeholder="Password"
-                    readOnly={isPending}
-                    required
-                  />
-                </InputGroup>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <InputGroup>
-                  <InputGroupAddon>
-                    <Check className="h-4 w-4" />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="confirmPassword"
-                    {...register("confirmPassword")}
-                    type="password"
-                    placeholder="Confirm Password"
+                    placeholder="Enter password here"
                     readOnly={isPending}
                     required
                   />
@@ -150,7 +97,7 @@ function SignupForm() {
                 disabled={isPending}
               >
                 {isPending && <LoaderCircle className="animate-spin" />}
-                {isPending ? "Signing up..." : "Sign up"}
+                {isPending ? "Logging in..." : "Login"}
               </Button>
             </div>
             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
@@ -175,8 +122,7 @@ function SignupForm() {
               <SignInSocialButton
                 provider="google"
                 callbackURL={redirectUrl}
-                // disabled={isPending}
-                disabled={true} // TODO disabled just for the preview deployment at https://tanstarter.nize.ph
+                disabled={isPending}
                 icon={
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -187,9 +133,14 @@ function SignupForm() {
                 }
               />
             </div>
+            <div className="text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <Link to="/signup" className="underline underline-offset-4">
+                Sign up
+              </Link>
+            </div>
           </div>
         </form>
-
         <div className="bg-muted relative hidden md:block">
           <img
             src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

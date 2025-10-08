@@ -4,6 +4,7 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
+  ShieldUser,
   Sparkles,
 } from "lucide-react";
 
@@ -97,6 +98,20 @@ export function NavUser() {
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
+            {user?.role === "admin" && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link to="/manage">
+                      <ShieldUser />
+                      Admin Zone
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>
               <LogOut />
