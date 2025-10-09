@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HahaRouteImport } from './routes/haha'
 import { Route as authenticatedRouteRouteImport } from './routes/(authenticated)/route'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,10 +21,16 @@ import { Route as authenticatedDashboardRouteRouteImport } from './routes/(authe
 import { Route as authenticatedDashboardIndexRouteImport } from './routes/(authenticated)/dashboard/index'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as authenticatedManageUsers2RouteImport } from './routes/(authenticated)/manage/users2'
 import { Route as authenticatedManageUsers1RouteImport } from './routes/(authenticated)/manage/users1'
 import { Route as authenticatedManageUsersRouteImport } from './routes/(authenticated)/manage/users'
 import { Route as authenticatedDashboardAccountAccountViewRouteImport } from './routes/(authenticated)/dashboard/account/$accountView'
 
+const HahaRoute = HahaRouteImport.update({
+  id: '/haha',
+  path: '/haha',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const authenticatedRouteRoute = authenticatedRouteRouteImport.update({
   id: '/(authenticated)',
   getParentRoute: () => rootRouteImport,
@@ -80,6 +87,12 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authenticatedManageUsers2Route =
+  authenticatedManageUsers2RouteImport.update({
+    id: '/users2',
+    path: '/users2',
+    getParentRoute: () => authenticatedManageRouteRoute,
+  } as any)
 const authenticatedManageUsers1Route =
   authenticatedManageUsers1RouteImport.update({
     id: '/users1',
@@ -101,6 +114,7 @@ const authenticatedDashboardAccountAccountViewRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof authenticatedRouteRouteWithChildren
+  '/haha': typeof HahaRoute
   '/dashboard': typeof authenticatedDashboardRouteRouteWithChildren
   '/manage': typeof authenticatedManageRouteRouteWithChildren
   '/login': typeof authLoginRoute
@@ -108,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/api/health': typeof ApiHealthRoute
   '/manage/users': typeof authenticatedManageUsersRoute
   '/manage/users1': typeof authenticatedManageUsers1Route
+  '/manage/users2': typeof authenticatedManageUsers2Route
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/dashboard/': typeof authenticatedDashboardIndexRoute
@@ -115,12 +130,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof authenticatedRouteRouteWithChildren
+  '/haha': typeof HahaRoute
   '/manage': typeof authenticatedManageRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/api/health': typeof ApiHealthRoute
   '/manage/users': typeof authenticatedManageUsersRoute
   '/manage/users1': typeof authenticatedManageUsers1Route
+  '/manage/users2': typeof authenticatedManageUsers2Route
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/dashboard': typeof authenticatedDashboardIndexRoute
@@ -131,6 +148,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/(authenticated)': typeof authenticatedRouteRouteWithChildren
+  '/haha': typeof HahaRoute
   '/(authenticated)/dashboard': typeof authenticatedDashboardRouteRouteWithChildren
   '/(authenticated)/manage': typeof authenticatedManageRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
@@ -138,6 +156,7 @@ export interface FileRoutesById {
   '/api/health': typeof ApiHealthRoute
   '/(authenticated)/manage/users': typeof authenticatedManageUsersRoute
   '/(authenticated)/manage/users1': typeof authenticatedManageUsers1Route
+  '/(authenticated)/manage/users2': typeof authenticatedManageUsers2Route
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/(authenticated)/dashboard/': typeof authenticatedDashboardIndexRoute
@@ -147,6 +166,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/haha'
     | '/dashboard'
     | '/manage'
     | '/login'
@@ -154,6 +174,7 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/manage/users'
     | '/manage/users1'
+    | '/manage/users2'
     | '/api/auth/$'
     | '/api/rpc/$'
     | '/dashboard/'
@@ -161,12 +182,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/haha'
     | '/manage'
     | '/login'
     | '/signup'
     | '/api/health'
     | '/manage/users'
     | '/manage/users1'
+    | '/manage/users2'
     | '/api/auth/$'
     | '/api/rpc/$'
     | '/dashboard'
@@ -176,6 +199,7 @@ export interface FileRouteTypes {
     | '/'
     | '/(auth)'
     | '/(authenticated)'
+    | '/haha'
     | '/(authenticated)/dashboard'
     | '/(authenticated)/manage'
     | '/(auth)/login'
@@ -183,6 +207,7 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/(authenticated)/manage/users'
     | '/(authenticated)/manage/users1'
+    | '/(authenticated)/manage/users2'
     | '/api/auth/$'
     | '/api/rpc/$'
     | '/(authenticated)/dashboard/'
@@ -193,6 +218,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   authenticatedRouteRoute: typeof authenticatedRouteRouteWithChildren
+  HahaRoute: typeof HahaRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
@@ -200,6 +226,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/haha': {
+      id: '/haha'
+      path: '/haha'
+      fullPath: '/haha'
+      preLoaderRoute: typeof HahaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(authenticated)': {
       id: '/(authenticated)'
       path: '/'
@@ -277,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(authenticated)/manage/users2': {
+      id: '/(authenticated)/manage/users2'
+      path: '/users2'
+      fullPath: '/manage/users2'
+      preLoaderRoute: typeof authenticatedManageUsers2RouteImport
+      parentRoute: typeof authenticatedManageRouteRoute
+    }
     '/(authenticated)/manage/users1': {
       id: '/(authenticated)/manage/users1'
       path: '/users1'
@@ -335,12 +375,14 @@ const authenticatedDashboardRouteRouteWithChildren =
 interface authenticatedManageRouteRouteChildren {
   authenticatedManageUsersRoute: typeof authenticatedManageUsersRoute
   authenticatedManageUsers1Route: typeof authenticatedManageUsers1Route
+  authenticatedManageUsers2Route: typeof authenticatedManageUsers2Route
 }
 
 const authenticatedManageRouteRouteChildren: authenticatedManageRouteRouteChildren =
   {
     authenticatedManageUsersRoute: authenticatedManageUsersRoute,
     authenticatedManageUsers1Route: authenticatedManageUsers1Route,
+    authenticatedManageUsers2Route: authenticatedManageUsers2Route,
   }
 
 const authenticatedManageRouteRouteWithChildren =
@@ -366,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   authenticatedRouteRoute: authenticatedRouteRouteWithChildren,
+  HahaRoute: HahaRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
